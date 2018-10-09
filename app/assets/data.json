@@ -1,6 +1,7 @@
 {
 
-	"menu": [{
+	"menu": [
+		{
 			"text": "Сохранить и приумножить",
 			"href": "preserve-and-increase.html"
 		},
@@ -21,8 +22,7 @@
 			"href": "family-solutions.html"
 		},
 		{
-			"text": "",
-			"href": ""
+			"is_separator": true
 		},
 		{
 			"text": "О нас",

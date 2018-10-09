@@ -1,4 +1,6 @@
+// var a = 5;
 $(function(){
+
 
 	console.log("i'm ready!!");
 
@@ -10,7 +12,7 @@ $(function(){
 	*/
 
 	$.getJSON('assets/data.json', function(data) {
-		console.log(data);
+		// console.log(data);
 		$(window).trigger( 'main:ready', data );
 	});
 
