@@ -51,8 +51,8 @@ $(window).on('main:ready', function( e, data ) {
 	});
 
 	$(window).on('main:pageChanged', function( e, new_page ) {
-		$('.menu-inner__item', $element).removeClass('menu-inner__item_active');
-		$('.menu-inner__item[data-page="'+new_page+'"]', $element).addClass('menu-inner__item_active');
+		$('.menu-inner__item', $element).removeClass('menu-inner__item_choosed');
+		$('.menu-inner__item[data-page="'+new_page+'"]', $element).addClass('menu-inner__item_choosed');
 	});
 
 });
