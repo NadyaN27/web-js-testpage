@@ -1,42 +1,58 @@
+//e - event событие 	main:ready
+//data - json данные, преобразованные в jQuery объект
 $(window).on('main:ready', function( e, data ) {
 	
 	var $element = $('.menu-inner__list');
 	if( !$element.length ) return;
 
-	console.log('menu', $element, data);
+
+	var defaultLanguage = data.defaultLanguage;
+	// console.log('menu', $element, data);
 
 	// $('.menu-inner__list').append('<li>').addClass("menu-inner__item ");
 	// console.log(data.menu);
 	
-	var $menu_items = $('.menu-inner__items');
+	var $menu_items = $('.menu-inner__items', $element);
+	var menu_item_elements = [];
 
 	data.menu.forEach(function(e,i){
 
 		if( e.is_separator ){
 			$('<li class="menu-inner__item menu-inner__item-line"></li>')
-				.appendTo($menu_items)
+				.appendTo( $menu_items )
 			;
 		}else{
-			$('<li class="menu-inner__item"><a href="#">'+e.text+'</a></li>')
-				.appendTo($menu_items)
-			;
+			menu_item_elements.push(
+				$('<li class="menu-inner__item" data-page="' +e.page+ '"><a href="#">' + e.text[defaultLanguage] + '</a></li>')
+					.data( 'text', e.text )
+					.appendTo( $menu_items )
+			);			
 		}
 	});
 
-	/*for(var i = 0; i < menuArray.length; i++){		
+	$('.menu-inner__item', $element).click(function(){
+		var page = $(this).data('page');
+		// $(this).addClass('menu-inner__item_choosed');
+		$(window).trigger( 'menu:change-page', page );
+	});
+	
+	// console.log(MenuTexts.length);
 
-		$('.menu-inner__list').prepend('<li>');
-		if(!text){
+	$(window).on('language:changed', function( e, lang ) {
 
-		}		
-	}
+		menu_item_elements.forEach(function( $e, index ){
+			var txt = $e.data( 'text' );
+			txt = txt[lang] || txt[defaultLanguage];
+			$('a', $e)
+				.empty()
+				.text(txt)
+			;
+		});
+	});
 
-	$('.menu-inner__list > li').addClass("menu-inner__item").prepend('<a>');
-
-	for(var i = 0; i < menuArray.length; i++){
-		var obj = menuArray[i];
-		$('.menu-inner__item > a').eq(i).attr('href', obj.href).html(obj.text);
-	}
-*/
+	$(window).on('main:pageChanged', function( e, new_page ) {
+		$('.menu-inner__item', $element).removeClass('menu-inner__item_active');
+		$('.menu-inner__item[data-page="'+new_page+'"]', $element).addClass('menu-inner__item_active');
+	});
 
 });

@@ -34,6 +34,7 @@
 	    background: url("../images/dropdown.svg") no-repeat center;
 	    background-size: contain;
         z-index: 2;
+        pointer-events: none;
 
         transition: .2s transform, .2s top;
 	}

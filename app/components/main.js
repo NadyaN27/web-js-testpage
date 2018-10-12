@@ -16,4 +16,10 @@ $(function(){
 		$(window).trigger( 'main:ready', data );
 	});
 
+	$(window).on('menu:change-page', function(e, new_page) {
+		// $( 'title').text(new_page);
+		$(window).trigger( 'main:pageChanged', new_page );
+
+	});
+
 });
