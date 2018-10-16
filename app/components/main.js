@@ -2,7 +2,7 @@
 $(function(){
 
 
-	console.log("i'm ready!!");
+	// console.log("i'm ready!!");
 
 	/*
 	var o = {};
@@ -24,11 +24,20 @@ $(function(){
 
 
 	$(window).on('main:ready', function(event, data){
-		// console.log(data);
+		
+		SetTitle();
+
+		var currentLang;
+		var currentPage;
 
 		$(window).on('language:changed', function(e, lang){
+			currentLang = lang;
+
 			if( !lang ) return;
 			var texts = data.texts;
+
+			SetTitle( currentPage, currentLang);
+
 
 			// console.log(texts);
 			/*
@@ -48,7 +57,21 @@ $(function(){
 			});
 
 		});
-		
+
+
+		$(window).on( 'main:pageChanged', function(event, page){
+			var currentPage = page;
+			SetTitle( currentPage, currentLang);
+		});
+
+		function SetTitle( pageName, lang ){
+			var page = pageName || data.defaultPage;
+			var lang = lang || data.defaultLanguage;
+
+			var title = data.pages[page].title[lang] || data.pages[page].title[data.defaultLanguage];
+			$('head > title').text( title );
+		}
+
 	});
 
 });

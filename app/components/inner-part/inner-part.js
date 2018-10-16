@@ -25,10 +25,12 @@ $(window).on('main:ready', function( e, data ) {
 		.on('menu:pageChanged', function( e, page ) {
 			showContent( page );
 		})
+
 		.on('main:pageChanged', function( e, _page ) {
 			current_page = _page;
 			showContent( current_page, current_lang );
 		})
+		
 		.on('language:changed', function( e, _lang ) {
 			current_lang = _lang;
 			showContent( current_page, current_lang );
@@ -49,8 +51,6 @@ $(window).on('main:ready', function( e, data ) {
 
 		var page_content = data.pages[ page || defaultPage];
 		var lang = lang || defaultLanguage;
-
-
 
 		var context = {
 			imgUrl: false || page_content.image[lang],
