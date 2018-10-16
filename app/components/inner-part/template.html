@@ -1,0 +1,26 @@
+<script class="" id="template" type="text/x-handlebars-template">
+
+	{{#if imgUrl}}
+		<div class="inner-part__image">
+			<img src= {{imgUrl}} >
+		</div>
+	{{/if}}
+
+
+	<div class="inner-part-content" >
+
+		<h2 class="inner-part__title"> {{title}} </h2>
+
+		<div class="inner-part-column">
+			{{text}}
+		</div>
+
+		<div class="inner-part-column">
+			<ul>
+				{{#each ulText}}
+					<li> {{text}} </li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</script>
