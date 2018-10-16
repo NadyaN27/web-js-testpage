@@ -1,5 +1,6 @@
 $(window).on('main:ready', function( e, data ) {
 	
+	// init
 	var $element = $('.inner-part');	
 	if( !$element.length ) return;
 
@@ -12,26 +13,38 @@ $(window).on('main:ready', function( e, data ) {
 	var $image = $('.inner-part__image > img', $element);
 	var $innerPartContent = $('.inner-part-content ', $element);
 	var $innerPartColumn = $('.inner-part-column ', $element);
+	
+	//
+	var template_source  = $("#inner-part-template").html();
+	var template = Handlebars.compile( template_source );
 
 
 
+	// events
+	$(window)
+		.on('menu:pageChanged', function( e, page ) {
+			showContent( page );
+		})
+		.on('main:pageChanged', function( e, _page ) {
+			current_page = _page;
+			showContent( current_page, current_lang );
+		})
+		.on('language:changed', function( e, _lang ) {
+			current_lang = _lang;
+			showContent( current_page, current_lang );
+		})
+	;
+
+	
+
+
+	// start
 	showContent();
 
-	$(window).on('menu:pageChanged', function( e, page ) {
-		showContent( page );
-	});
 
-	$(window).on('main:pageChanged', function( e, _page ) {
-		current_page = _page;
-		showContent( current_page, current_lang );
-	});
 
-	$(window).on('language:changed', function( e, _lang ) {
-		current_lang = _lang;
-		showContent( current_page, current_lang );
-	});
 
-	//
+	// functions
 	function showContent( page, lang ){
 
 		var page_content = data.pages[ page || defaultPage];
@@ -45,12 +58,8 @@ $(window).on('main:ready', function( e, data ) {
 			text: page_content.text[lang],
 			ulText: page_content.ulTexts[lang]
 		};
-
-
-		var source   = document.getElementById("template").innerHTML;
-		var template = Handlebars.compile( source );
-		var html = template( context );
-		$element.html( html );
+		
+		$element.html( template( context ) );
 
 
 

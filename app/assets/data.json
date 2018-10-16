@@ -396,14 +396,14 @@
 	"texts": {
 		"raiffeisen-services-pdf": {
 			"ru": "Скачать «Услуги FWR»",
-			"en": "",
-			"de": ""
+			"en": "Download “FWR Services”",
+			"de": "Download “FWR-Dienste”"
 		},
 		
 		"copy": {
-			"ru": "© 2009-2017 АО «Райффайзенбанк» ",
-			"en": "",
-			"de": ""
+            "ru": "© 2009-2017 АО «Райффайзенбанк» ",
+			"en": "© 2009-2017  JSC “Raiffeisenbank”",
+			"de": "© 2009-2017  JSC “Raquoserbank”"
 		}
 	},
 
