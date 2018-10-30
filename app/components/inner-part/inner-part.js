@@ -15,8 +15,7 @@ $(window).on('main:ready', function( e, data ) {
 	var $innerPartColumn = $('.inner-part-column ', $element);
 	
 	//
-	var template_source  = $("#inner-part-template").html();
-	var template = Handlebars.compile( template_source );
+	var template = Handlebars.compile($("#inner-part-template").html());
 
 
 
@@ -30,7 +29,7 @@ $(window).on('main:ready', function( e, data ) {
 			current_page = _page;
 			showContent( current_page, current_lang );
 		})
-		
+
 		.on('language:changed', function( e, _lang ) {
 			current_lang = _lang;
 			showContent( current_page, current_lang );
@@ -53,13 +52,20 @@ $(window).on('main:ready', function( e, data ) {
 		var lang = lang || defaultLanguage;
 
 		var context = {
-			imgUrl: false || page_content.image[lang],
-			title: page_content.title[lang],
-			text: page_content.text[lang],
-			ulText: page_content.ulTexts[lang]
+			imgUrl: false || page_content.image[lang] || page_content.image[defaultLanguage],
+			title: page_content.title[lang] || page_content.title[defaultLanguage],
+			text: page_content.text[lang] || page_content.text[defaultLanguage],
+			ulText: page_content.ulTexts[lang] || page_content.ulTexts[defaultLanguage]
 		};
 		
-		$element.html( template( context ) );
+		// $element.html( template( context ) );
+
+		$element.fadeOut(300, function() {
+			
+			$(this).html( template( context ) );
+			$(this).fadeIn(300);
+		});
+		
 
 
 

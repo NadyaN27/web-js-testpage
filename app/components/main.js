@@ -50,10 +50,17 @@ $(function(){
 
 			$("[data-trnslt]").each(function(i,e){
 				// console.log('>', i, e );
-				e = $(e);
-				var translate = texts[ e.data('trnslt') ];
+				$e = $(e);
+				var translate = texts[ $e.data('trnslt') ];
 				if( !translate ) return;
-				e.html( translate[lang] || translate[data.defaultLanguage] );
+
+				//texts animation
+				$e.fadeOut(300, function(){
+					$(this).html( translate[lang] || translate[data.defaultLanguage] );
+					$(this).fadeIn(300);				
+					
+				} );
+
 			});
 
 		});

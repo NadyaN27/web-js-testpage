@@ -39,14 +39,20 @@ $(window).on('main:ready', function( e, data ) {
 	// console.log(MenuTexts.length);
 
 	$(window).on('language:changed', function( e, lang ) {
+		
 
 		menu_item_elements.forEach(function( $e, index ){
+			
 			var txt = $e.data( 'text' );
 			txt = txt[lang] || txt[defaultLanguage];
-			$('a', $e)
-				.empty()
-				.text(txt)
-			;
+
+			$e.fadeOut(200, function(){
+				$('a', $e )
+					.empty()
+					.text(txt)
+				;				
+				$e.fadeIn(200);
+			});
 		});
 	});
 
