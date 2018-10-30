@@ -261,7 +261,6 @@ $list-p_desktop: 40px;
 	display: block;
     margin: 27px 0;
 	opacity: 1;
-	// transition: opacity 0.3s;
 
 	@include FONT-MENU();
 
@@ -274,6 +273,7 @@ $list-p_desktop: 40px;
 
 	&:hover{
 		opacity: 0.5;
+		transition: opacity 0.3s;
 	}
 
 	a{

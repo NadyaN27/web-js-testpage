@@ -41,18 +41,58 @@ $(window).on('main:ready', function( e, data ) {
 	$(window).on('language:changed', function( e, lang ) {
 		
 
+
 		menu_item_elements.forEach(function( $e, index ){
-			
+			/*
+			setTimeout(function(){
+				var txt = $e.data( 'text' );
+				txt = txt[lang] || txt[defaultLanguage];
+
+				$e.fadeOut(200, function(){
+					$('a', $e )
+						.empty()
+						.text(txt)
+					;				
+					$e.fadeIn(200);
+				});
+			}, ~~(index * 50) );*/
+
+
 			var txt = $e.data( 'text' );
 			txt = txt[lang] || txt[defaultLanguage];
+			// console.log(menu_item_elements);
 
-			$e.fadeOut(200, function(){
-				$('a', $e )
-					.empty()
-					.text(txt)
-				;				
-				$e.fadeIn(200);
-			});
+			TweenMax.fromTo($e, .2,
+				{
+					y: 0,
+					opacity: 1
+				},
+				{
+					y: 5,
+					opacity: 0,
+					delay: (0.05 * index),
+					onComplete: function(argument) {
+
+						$('a', $e )
+							.empty()
+							.text(txt)
+						;
+
+
+						TweenMax.fromTo($e, .2,
+							{
+								y: -5,
+								opacity: 0
+							},
+							{
+								y: 0,
+								opacity: 1,
+								delay: (0.05 * index),
+							}
+						);
+					}
+				}
+			);
 		});
 	});
 

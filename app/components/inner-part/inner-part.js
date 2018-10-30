@@ -9,10 +9,9 @@ $(window).on('main:ready', function( e, data ) {
 	var current_page = defaultPage;
 	var current_lang = defaultLanguage;
 
-	var $title = $('.inner-part__title', $element);
-	var $image = $('.inner-part__image > img', $element);
-	var $innerPartContent = $('.inner-part-content ', $element);
-	var $innerPartColumn = $('.inner-part-column ', $element);
+	var $title;
+	var $image;
+	var $innerPartColumn;
 	
 	//
 	var template = Handlebars.compile($("#inner-part-template").html());
@@ -60,91 +59,123 @@ $(window).on('main:ready', function( e, data ) {
 		
 		// $element.html( template( context ) );
 
-		$element.fadeOut(300, function() {
+		/*$element.fadeOut(300, function() {
 			
-			$(this).html( template( context ) );
-			$(this).fadeIn(300);
-		});
+			$element.html( template( context ) );
+			$element.fadeIn(300);
+		});*/
 		
+		// TweenMax.set( $title, {top: '10'} );
 
 
 
+		// title
+		if($title){
 
-		/*var sourceContent = ''+
-		'<div class="inner-part-content">'+
-			'<h2 class="inner-part__title"> {{ title }} </h2>'+
-		'</div>' ;
+			TweenMax.killTweensOf( $image );
+			TweenMax.fromTo( $image, .2,
+				{
+					scale: 1,
+					opacity: 1
+				},
+				{
+					delay: 0,
+					scale: 1.2,
+					opacity: 0,
+					ease: Sine.easeIn,
+				}
+			);
 
-		var contextContent = {title: page_content.title[lang]};
-		var template = Handlebars.compile(sourceContent);
-		var htmlContent = template(contextContent);
-		$element.html(htmlContent);
+			TweenMax.killTweensOf( $title );
+			TweenMax.fromTo( $title, .2,
+				{
+					x: 0,
+					opacity: 1
+				},
+				{
+					delay: 0.15,
+					x: 10,
+					opacity: 0,
+					ease: Sine.easeIn,
+				}
+			);
 
+			TweenMax.killTweensOf( $innerPartColumn );
+			TweenMax.fromTo( $innerPartColumn, .2,
+				{
+					// x: 0,
+					opacity: 1
+				},
+				{
+					delay: 0.3,
+					// x: 30,
+					opacity: 0,
+					ease: Sine.easeIn,
+					onComplete: function(argument) {
 
-		if(page_content.image){
-			var source = ''+
-				'<div class="inner-part__image">' + 
-					'<img src={{imgUrl}}>' +
-				'</div>';
+						_showContent();
+					}
+				}
+			);
 
-			var template = Handlebars.compile(source);
-			var context = {imgUrl: page_content.image[lang] };
-			var html = template(context);
-			
-			$element.prepend(html);
+		}else{
+			_showContent();
 		}
 
 
-		if( page_content.text ){
-			var sourceText = ''+
-				'<div class="inner-part-column">' + 
-					'{{text}}' +
-				'</div>';
 
-			var template = Handlebars.compile( sourceText );
-			var contextText = {text: page_content.text[lang]};
-			var htmlText = template( contextText );
+		function _showContent(){
 
-			$('.inner-part-content', $element).append( htmlText );
+			$element.html( template( context ) );
+					
+			$title = $('.inner-part__title', $element);
+			$image = $('.inner-part__image > img', $element);
+			$innerPartColumn = $('.inner-part-column ', $element);
+
+
+
+			TweenMax.fromTo( $image, .2,
+				{
+					scale: 1.2,
+					opacity: 0
+				},
+				{
+					scale: 1,
+					opacity: 1,
+					ease: Sine.easeOut,
+					delay: 0
+					
+				}
+			);
+
+			TweenMax.fromTo( $title, .2,
+				{
+					x: -10,
+					opacity: 0
+				},
+				{
+					x: 0,
+					opacity: 1,
+					ease: Sine.easeOut,
+					delay: 0.15
+
+				}
+			);
+
+			TweenMax.fromTo( $innerPartColumn, .5,
+				{
+					// x: -10,
+					opacity: 0
+				},
+				{
+					// x: 0,
+					opacity: 1,
+					ease: Sine.easeOut,
+					delay: 0.3
+					
+				}
+			);
 		}
 
-
-		if( page_content.ulTexts ){
-			var sourceUl = ''+
-				'<div class="inner-part-column">' + 
-					'<ul>' +
-						'{{#each ulText}}' +
-							'<li> {{text}} </li>' +
-						'{{/each}}'	+
-					'</ul>' +
-				'</div>';
-
-			var template = Handlebars.compile( sourceUl );
-			var contextUl = { ulText: page_content.ulTexts[lang] };
-			var htmlUl = template( contextUl );
-
-			$('.inner-part-content', $element).append( htmlUl );
-		}*/
-
-
-		// $title.text( page_content.title[lang] );
-
-		/*if(page_content.image){
-			$image.attr('src', page_content.image[lang] || page_content.image[defaultLanguage] );		
-		}*/
-		
-		/*if( page_content.text ){
-			$innerPartColumn.text( page_content.text[lang] );		
-		}*/
-
-		/*if( page_content.ulTexts ){
-			$innerPartColumn.append('<ul></ul>');
-
-			page_content.ulTexts[lang].forEach( function(e, i){
-				$('ul', $innerPartColumn).append('<li>' +e+ '</li>');	
-			}); 
-		}*/
 	}
-
-
 });

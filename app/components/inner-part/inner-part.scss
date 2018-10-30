@@ -35,9 +35,13 @@
 }
 
 .inner-part__title {
+	position: relative;
+	
+
     display: block;
-    text-align: left;
     margin-bottom: 46px;
+    
+    text-align: left;
     color: $sdark;
 
     @include FONT-CONTENT-TITLE();
@@ -55,6 +59,7 @@
 }
 
 .inner-part__image{
+	position: relative;
 	position: relative;
     width: 37.8%;
     height: 77vh;
