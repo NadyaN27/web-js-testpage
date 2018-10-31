@@ -51,7 +51,6 @@
 
 
 
-
 // NEW
 @mixin PHONE-N{
     @media only screen and (max-width: $WIDTH-PHONE-N - 1) { @content; }
@@ -73,6 +72,24 @@
     @media only screen and (min-width: $WIDTH-DESKTOP-N) { @content; }
 }
 
+
+@mixin PHONE-N_JS{
+    @at-root .is_phone &{
+        @content;
+    }
+}
+
+@mixin TABLET-N_JS{
+    @at-root .is_tablet &{
+        @content;
+    }
+}
+
+@mixin DESKTOP_JS{
+    @at-root .is_desktop &{
+        @content;
+    }
+}
 
 // .tablet-hide{
 //     @include ADAPTIVE(tablet){display: none;}

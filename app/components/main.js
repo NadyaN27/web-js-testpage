@@ -1,6 +1,29 @@
 // var a = 5;
 $(function(){
+	var $body = $('body');
 
+	var windowWidth = window.innerWidth;
+	var tabletMin = 768;
+	var tabletMax = 1024;
+
+	/*var root = '/';
+	var useHash = true; // Defaults to: false
+	var hash = '#!'; 
+	var router = new Navigo(root, useHash, hash);*/
+
+	
+
+	$(window)
+		.resize(function(){
+			var winWidth = window.innerWidth;
+
+			$body.toggleClass('is_phone', winWidth <= tabletMin );
+			$body.toggleClass('is_tablet', winWidth > tabletMin && winWidth <= tabletMax );
+			$body.toggleClass('is_desktop', winWidth > tabletMax );
+
+		})
+		.trigger('resize')
+	;
 
 	// console.log("i'm ready!!");
 
@@ -16,9 +39,15 @@ $(function(){
 		$(window).trigger( 'main:ready', data );
 	});
 
+
+
+
 	$(window).on('menu:change-page', function(e, new_page) {
 		// $( 'title').text(new_page);
 		$(window).trigger( 'main:pageChanged', new_page );
+
+		/*router
+			.navigate('/' +new_page);*/
 
 	});
 
@@ -38,15 +67,6 @@ $(function(){
 
 			SetTitle( currentPage, currentLang);
 
-
-			// console.log(texts);
-			/*
-			$.each(texts, function(key, value){
-
-				$("[data-trnslt="+key+"]").html(value[lang]);
-
-			});
-			*/
 
 			$("[data-trnslt]").each(function(i,e){
 				// console.log('>', i, e );

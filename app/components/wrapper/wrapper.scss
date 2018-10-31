@@ -6,7 +6,7 @@
 	box-sizing: border-box;
 	border: $BORDER-DESKTOP solid #ffffff;
 	position: relative;
-	background: #f9f9f8;
+	// background: #f9f9f8;
 	// min-height: 780px;
 	// overflow-x: hidden;
 	
@@ -51,7 +51,24 @@
 		// min-height: 815px;
 	}
 
+	
+	
+ 
+	@include PHONE-N_JS {
+		background-color: rgba(#b4afd4, 0.2);
+	}
+
+	@include TABLET-N_JS {
+		background-color: rgba(#946e6e, 0.2);
+
+	}
+
+	@include  DESKTOP_JS {
+		background-color: rgba(#a59785, 0.2);
+	}
+
 }
+
 
 /*
 .wrapper_overflow{
