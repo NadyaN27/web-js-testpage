@@ -23,7 +23,7 @@ $(window).on('main:ready', function( e, data ) {
 			;
 		}else{
 			menu_item_elements.push(
-				$('<li class="menu-inner__item" data-page="' +e.page+ '"><a href="#">' + e.text[defaultLanguage] + '</a></li>')
+				$('<li class="menu-inner__item" data-page="' +e.page+ '"><a  href="#!'+e.page+'" data-navigo>' + e.text[defaultLanguage] + '</a></li>')
 					.data( 'text', e.text )
 					.appendTo( $menu_items )
 			);			
@@ -33,7 +33,7 @@ $(window).on('main:ready', function( e, data ) {
 	$('.menu-inner__item', $element).click(function(){
 		var page = $(this).data('page');
 		// $(this).addClass('menu-inner__item_choosed');
-		$(window).trigger( 'menu:change-page', page );
+		// $(window).trigger( 'menu:change-page', page );
 	});
 	
 	// console.log(MenuTexts.length);

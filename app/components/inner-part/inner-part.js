@@ -20,9 +20,9 @@ $(window).on('main:ready', function( e, data ) {
 
 	// events
 	$(window)
-		.on('menu:pageChanged', function( e, page ) {
+		/*.on('menu:pageChanged', function( e, page ) {
 			showContent( page );
-		})
+		})*/
 
 		.on('main:pageChanged', function( e, _page ) {
 			current_page = _page;
@@ -47,15 +47,30 @@ $(window).on('main:ready', function( e, data ) {
 	// functions
 	function showContent( page, lang ){
 
-		var page_content = data.pages[ page || defaultPage];
-		var lang = lang || defaultLanguage;
+		if( page=='404'){
+			// var page_content = data.pages[ page || defaultPage];
+			// var lang = lang || defaultLanguage;
 
-		var context = {
-			imgUrl: false || page_content.image[lang] || page_content.image[defaultLanguage],
-			title: page_content.title[lang] || page_content.title[defaultLanguage],
-			text: page_content.text[lang] || page_content.text[defaultLanguage],
-			ulText: page_content.ulTexts[lang] || page_content.ulTexts[defaultLanguage]
-		};
+			var context = {
+				imgUrl: "",
+				title: "404",
+				text: "",
+				ulText: ""
+			};
+			
+		} else {
+
+			var page_content = data.pages[ page || defaultPage];
+			var lang = lang || defaultLanguage;
+
+			var context = {
+				imgUrl: false || page_content.image[lang] || page_content.image[defaultLanguage],
+				title: page_content.title[lang] || page_content.title[defaultLanguage],
+				text: page_content.text[lang] || page_content.text[defaultLanguage],
+				ulText: page_content.ulTexts[lang] || page_content.ulTexts[defaultLanguage]
+			};
+		}
+
 		
 		// $element.html( template( context ) );
 

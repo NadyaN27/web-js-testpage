@@ -6,10 +6,13 @@ $(function(){
 	var tabletMin = 768;
 	var tabletMax = 1024;
 
-	/*var root = '/';
+	// >>> ROUTER >>>
+	var root = null;
 	var useHash = true; // Defaults to: false
 	var hash = '#!'; 
-	var router = new Navigo(root, useHash, hash);*/
+	var router = new Navigo(root, useHash, hash);	
+
+	// <<< ROUTER <<<
 
 	
 
@@ -25,31 +28,27 @@ $(function(){
 		.trigger('resize')
 	;
 
-	// console.log("i'm ready!!");
 
-	/*
-	var o = {};
-	console.log( "$(o)'", $(o) );
-	console.log( "$('<canvas>')", $('<canvas>') );
-	console.log( "$('div')", $('div') );
-	*/
+	
 
 	$.getJSON('assets/data.json', function(data) {
 		// console.log(data);
 		$(window).trigger( 'main:ready', data );
+
+		router.updatePageLinks();
 	});
 
 
 
 
-	$(window).on('menu:change-page', function(e, new_page) {
+	/*$(window).on('menu:change-page', function(e, new_page) {
 		// $( 'title').text(new_page);
 		$(window).trigger( 'main:pageChanged', new_page );
 
-		/*router
-			.navigate('/' +new_page);*/
+		router
+			.navigate('/' +new_page);
 
-	});
+	});*/
 
 
 	$(window).on('main:ready', function(event, data){
@@ -58,6 +57,39 @@ $(function(){
 
 		var currentLang;
 		var currentPage;
+
+		router
+			.on({
+				
+
+				':id': function(params) {
+
+					console.log('id:', params.id);
+
+					var new_page = params.id || data.defaultPage;
+					// console.log( data.defaultPage );
+					
+					if( data.pages[new_page] ){
+						$(window).trigger( 'main:pageChanged', new_page );
+
+					} else {
+						// console.log('404');
+						router.navigate('404');
+						$(window).trigger( 'main:pageChanged', '404' );
+					}
+				},
+
+				'': function(a,b) {
+					console.log('HOME',a,b);
+				},
+				
+				'*': function(a,b) {
+					console.log('errUrl',a,b);
+				}
+			})
+			.resolve();
+
+
 
 		$(window).on('language:changed', function(e, lang){
 			currentLang = lang;
@@ -95,7 +127,13 @@ $(function(){
 			var page = pageName || data.defaultPage;
 			var lang = lang || data.defaultLanguage;
 
-			var title = data.pages[page].title[lang] || data.pages[page].title[data.defaultLanguage];
+			if( page == "404") {
+				var title = "Error:404";
+
+			} else {
+
+				var title = data.pages[page].title[lang] || data.pages[page].title[data.defaultLanguage];
+			}
 			$('head > title').text( title );
 		}
 
