@@ -20,6 +20,10 @@ $(window).on('main:ready', function( e, data ) {
 	$currentLang.click(function() {
 		$element.addClass("langs_active");
 	});
+
+	$(window).on('main:langChanged', function(e, lang){
+		setLang(lang);
+	});
 	
 		//генерация события
 	$('.langs__item').click(function() {

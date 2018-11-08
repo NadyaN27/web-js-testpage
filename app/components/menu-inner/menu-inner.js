@@ -5,6 +5,8 @@ $(window).on('main:ready', function( e, data ) {
 	var $element = $('.menu-inner__list');
 	if( !$element.length ) return;
 
+	// console.log("window.MAIN: ", window.MAIN._id );
+	// console.log("window.MAIN: ", $(window).data('MAIN') );
 
 	var defaultLanguage = data.defaultLanguage;
 	// console.log('menu', $element, data);
@@ -23,7 +25,7 @@ $(window).on('main:ready', function( e, data ) {
 			;
 		}else{
 			menu_item_elements.push(
-				$('<li class="menu-inner__item" data-page="' +e.page+ '"><a  href="#!'+e.page+'" data-navigo>' + e.text[defaultLanguage] + '</a></li>')
+				$('<li class="menu-inner__item" data-page="' +e.page+ '"><a  href="'+e.page+'" data-navigo>' + e.text[defaultLanguage] + '</a></li>')
 					.data( 'text', e.text )
 					.appendTo( $menu_items )
 			);			

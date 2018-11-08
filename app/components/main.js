@@ -1,5 +1,6 @@
 // var a = 5;
 $(function(){
+
 	var $body = $('body');
 
 	var windowWidth = window.innerWidth;
@@ -13,7 +14,6 @@ $(function(){
 	var router = new Navigo(root, useHash, hash);	
 
 	// <<< ROUTER <<<
-
 	
 
 	$(window)
@@ -29,6 +29,14 @@ $(function(){
 	;
 
 
+	// #!
+	// var MAIN = window.MAIN = {};
+	// MAIN._id = 123;
+
+	// #2
+	// var MAIN = {};
+	// MAIN._id = 123;
+	// $(window).data('MAIN', MAIN );
 	
 
 	$.getJSON('assets/data.json', function(data) {
@@ -61,28 +69,64 @@ $(function(){
 		router
 			.on({
 				
+				':lang/:id': function(params) {
 
-				':id': function(params) {
-
-					console.log('id:', params.id);
 
 					var new_page = params.id || data.defaultPage;
-					// console.log( data.defaultPage );
+					currentPage = new_page;
+
+					var lang = params.lang;
+
+					var arrLangs = [];
+					
+					data.langs.forEach(function(item, i, arr) {
+						arrLangs.push(item.data);
+					});
+					
+
+					if( arrLangs.indexOf( lang ) != -1 ){
+						$(window).trigger( 'language:changed', lang  );
+						$(window).trigger( 'main:langChanged', lang  )
+					} else {
+						router.navigate('404');
+						$(window).trigger( 'main:pageChanged', '404' );
+					}
+
+
 					
 					if( data.pages[new_page] ){
 						$(window).trigger( 'main:pageChanged', new_page );
 
 					} else {
-						// console.log('404');
 						router.navigate('404');
 						$(window).trigger( 'main:pageChanged', '404' );
 					}
 				},
 
+				':id': function(params) {
+
+					
+
+					
+					console.log('id:', params.id);
+
+					var new_page = params.id || data.defaultPage;
+					
+					if( data.pages[new_page] ){
+						router.navigate( currentLang+'/'+params.id);
+						// $(window).trigger( 'main:pageChanged', new_page );
+
+					} else {
+						router.navigate('404');
+						$(window).trigger( 'main:pageChanged', '404' );
+					}
+
+				},
+
 				'': function(a,b) {
 					console.log('HOME',a,b);
 				},
-				
+
 				'*': function(a,b) {
 					console.log('errUrl',a,b);
 				}
@@ -99,9 +143,12 @@ $(function(){
 
 			SetTitle( currentPage, currentLang);
 
+			currentPage = currentPage || data.defaultPage;
+			router.navigate('/' +currentLang+'/'+currentPage+'');
+
+
 
 			$("[data-trnslt]").each(function(i,e){
-				// console.log('>', i, e );
 				$e = $(e);
 				var translate = texts[ $e.data('trnslt') ];
 				if( !translate ) return;
@@ -119,13 +166,14 @@ $(function(){
 
 
 		$(window).on( 'main:pageChanged', function(event, page){
-			var currentPage = page;
+			currentPage = page;
 			SetTitle( currentPage, currentLang);
 		});
 
 		function SetTitle( pageName, lang ){
 			var page = pageName || data.defaultPage;
 			var lang = lang || data.defaultLanguage;
+
 
 			if( page == "404") {
 				var title = "Error:404";
