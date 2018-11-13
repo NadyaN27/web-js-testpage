@@ -34,29 +34,55 @@ $(function(){
 	// MAIN._id = 123;
 
 	// #2
-	// var MAIN = {};
-	// MAIN._id = 123;
-	// $(window).data('MAIN', MAIN );
-	
+	var MAIN = {};
+	MAIN._id = 123;
+    $(window).data('MAIN', MAIN );
+
+	MAIN.currentPage;
+	MAIN.currentLang;	
+
+	MAIN.makeUrl = function(){
+		// var url = "";
+
+		var url = this.currentLang + '/' + this.currentPage;
+
+		// console.log('url', url);
+		return url;
+	}
+
+	// console.log( $(window).data( $.proxy( MAIN.makeUrl(), MAIN) )  );
+
+
+
+
+	//подмена ссылокв пунках меню
+	function setLinkMenu(lang){
+		var lang = lang || $(window).data('MAIN.currentLang');
+
+		var $links = $( '[data-navigo]' );
+
+		$links.each( function(i,e){
+			var $e = $(e);
+
+			var href = $e.attr( 'href' );
+			var arrHref = href.split( '/' );
+
+			$e.attr('href', lang+ '/' +arrHref[arrHref.length - 1] );
+		} );
+	}
+
 
 	$.getJSON('assets/data.json', function(data) {
-		// console.log(data);
+		$(window).data('MAIN.currentLang', data.defaultLanguage );
+		$(window).data('MAIN.currentPage', data.defaultPage );
+
 		$(window).trigger( 'main:ready', data );
+
+
+		setLinkMenu();
 
 		router.updatePageLinks();
 	});
-
-
-
-
-	/*$(window).on('menu:change-page', function(e, new_page) {
-		// $( 'title').text(new_page);
-		$(window).trigger( 'main:pageChanged', new_page );
-
-		router
-			.navigate('/' +new_page);
-
-	});*/
 
 
 	$(window).on('main:ready', function(event, data){
@@ -71,7 +97,6 @@ $(function(){
 				
 				':lang/:id': function(params) {
 
-
 					var new_page = params.id || data.defaultPage;
 					currentPage = new_page;
 
@@ -85,14 +110,14 @@ $(function(){
 					
 
 					if( arrLangs.indexOf( lang ) != -1 ){
+
 						$(window).trigger( 'language:changed', lang  );
 						$(window).trigger( 'main:langChanged', lang  )
 					} else {
+
 						router.navigate('404');
 						$(window).trigger( 'main:pageChanged', '404' );
 					}
-
-
 					
 					if( data.pages[new_page] ){
 						$(window).trigger( 'main:pageChanged', new_page );
@@ -103,12 +128,10 @@ $(function(){
 					}
 				},
 
-				':id': function(params) {
+				':id': function(params) {					
 
 					
-
-					
-					console.log('id:', params.id);
+					// console.log('id:', params.id);
 
 					var new_page = params.id || data.defaultPage;
 					
@@ -136,15 +159,26 @@ $(function(){
 
 
 		$(window).on('language:changed', function(e, lang){
+
 			currentLang = lang;
+
+			$(window).data('MAIN.currentLang', lang );
+
+			setLinkMenu();
+
+			// console.log( $(window).data( )  );
+
 
 			if( !lang ) return;
 			var texts = data.texts;
 
+			currentPage = currentPage || data.defaultPage;
 			SetTitle( currentPage, currentLang);
 
-			currentPage = currentPage || data.defaultPage;
+
 			router.navigate('/' +currentLang+'/'+currentPage+'');
+
+
 
 
 
@@ -156,12 +190,9 @@ $(function(){
 				//texts animation
 				$e.fadeOut(300, function(){
 					$(this).html( translate[lang] || translate[data.defaultLanguage] );
-					$(this).fadeIn(300);				
-					
+					$(this).fadeIn(300);					
 				} );
-
 			});
-
 		});
 
 
@@ -170,6 +201,8 @@ $(function(){
 			SetTitle( currentPage, currentLang);
 		});
 
+
+		
 		function SetTitle( pageName, lang ){
 			var page = pageName || data.defaultPage;
 			var lang = lang || data.defaultLanguage;

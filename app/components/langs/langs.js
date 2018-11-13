@@ -42,11 +42,4 @@ $(window).on('main:ready', function( e, data ) {
 			.html(lang)
 		;
 	}
-
-
-/*	//___________________________________
-	$(window).on('language:changed', function( e, lang ) {
-		console.log(lang);
-	});
-*/
 });
