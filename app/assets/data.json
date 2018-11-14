@@ -8,7 +8,7 @@
 			"text": {
 				"ru": "Сохранить и приумножить",
 				"en": "Save",
-				"de": ""
+				"de": "Speichern und wachsen"
 			}
 		},
 		{
@@ -16,7 +16,7 @@
 			"text": {
 				"ru": "Получить финансирование",
 				"en": "Get",
-				"de": ""
+				"de": "Finanzierung erhalten"
 			}
 		},
 		{
@@ -24,7 +24,7 @@
 			"text": {
 				"ru": "Решение для вашего бизнеса",
 				"en": "solution",
-				"de": ""
+				"de": "Lösung für Ihr Unternehmen"
 			}
 		},
 		{
@@ -32,7 +32,7 @@
 			"text": {
 				"ru": "Банковское обслуживание",
 				"en": "banking service",
-				"de": ""
+				"de": "Bankdienst"
 			}
 		},
 		{
@@ -40,7 +40,7 @@
 			"text": {
 				"ru": "Решения для вашей семьи и консалтинг",
 				"en": "solution for your family",
-				"de": ""
+				"de": "Lösungen für Ihre Familie und Beratung"
 			}
 		},
 		{
@@ -51,7 +51,7 @@
 			"text": {
 				"ru": "О нас",
 				"en": "about",
-				"de": ""
+				"de": "Über uns"
 			}
 		},
 		{
@@ -59,7 +59,7 @@
 			"text": {
 				"ru": "Контактная информация",
 				"en": "contacts",
-				"de": ""
+				"de": "Kontaktinformationen"
 			}
 		}
 	],
@@ -71,7 +71,7 @@
 			"title": {
 				"ru": "Сохранить и приумножить",
 				"en": "Save",
-				"de": "Сохранить и приумножить (DE)"
+				"de": "Speichern und wachsen"
 			},
 
 
@@ -147,7 +147,7 @@
 			"title": {
 				"ru": "Получить финансирование",
 				"en": "Get",
-				"de": ""
+				"de": "Finanzierung erhalten"
 			},
 			"image": {
 				"ru": "http://sb.peppers-studio.ru/dp/raiffeisen/images/inner-illustrations-2.png",
@@ -157,7 +157,7 @@
 			"text": {
 				"ru": "Широкий выбор кредитных продуктов:",
 				"en": "Friedrich Wilhelm Raiffeisen ",
-				"de": ""
+				"de": "Große Auswahl an Kreditprodukten:"
 			},
 			"ulTexts": {
 				"ru": [

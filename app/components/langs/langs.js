@@ -6,6 +6,9 @@ $(window).on('main:ready', function( e, data ) {
 	var $currentLang = $('p', $element);	
 	var $langs__items =	$('.langs__items', $element);
 
+	var MAIN = $(window).data('MAIN');
+
+	setLang( MAIN.currentLang );
 
 	//генерация элементов
 	data.langs.forEach( function(e, i) {

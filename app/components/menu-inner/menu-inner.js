@@ -6,8 +6,9 @@ $(window).on('main:ready', function( e, data ) {
 	if( !$element.length ) return;
 
 	
-
-	var defaultLanguage = data.defaultLanguage;
+	var MAIN = $(window).data('MAIN');
+	// var defaultLanguage = MAIN.currentLang;
+	var defaultLanguage =  data.defaultLanguage;
 
 	
 	var $menu_items = $('.menu-inner__items', $element);
@@ -21,7 +22,7 @@ $(window).on('main:ready', function( e, data ) {
 			;
 		}else{
 			menu_item_elements.push(
-				$('<li class="menu-inner__item" data-page="' +e.page+ '"><a  href="'+e.page+'" data-navigo>' + e.text[defaultLanguage] + '</a></li>')
+				$('<li class="menu-inner__item" data-page="' +e.page+ '"><a  href="'+e.page+'" data-navigo>' + e.text[ $.cookie('language') || defaultLanguage] + '</a></li>')
 					.data( 'text', e.text )
 					.appendTo( $menu_items )
 			);			

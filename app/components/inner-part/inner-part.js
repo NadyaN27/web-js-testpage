@@ -12,6 +12,8 @@ $(window).on('main:ready', function( e, data ) {
 	var $title;
 	var $image;
 	var $innerPartColumn;
+
+	var MAIN = $(window).data('MAIN');
 	
 	//
 	var template = Handlebars.compile($("#inner-part-template").html());
@@ -39,7 +41,7 @@ $(window).on('main:ready', function( e, data ) {
 
 
 	// start
-	showContent();
+	showContent( MAIN.currentPage, MAIN.currentLang );
 
 
 
@@ -191,6 +193,5 @@ $(window).on('main:ready', function( e, data ) {
 				}
 			);
 		}
-
 	}
 });

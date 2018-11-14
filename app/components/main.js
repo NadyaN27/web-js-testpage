@@ -7,6 +7,9 @@ $(function(){
 	var tabletMin = 768;
 	var tabletMax = 1024;
 
+	var arrLangs = [];
+	var defaultLanguage;
+
 	// >>> ROUTER >>>
 	var root = null;
 	var useHash = true; // Defaults to: false
@@ -42,7 +45,7 @@ $(function(){
 
 	MAIN.getUrl = function(){
 
-		var url = this.currentLang + '/' + this.currentPage;
+		var url = '/' +this.currentLang + '/' + this.currentPage;
 
 		return url;
 	}
@@ -70,14 +73,21 @@ $(function(){
 
 	$.getJSON('assets/data.json', function(data) {
 
-		var MAIN = $(window).data('MAIN');
+		// var MAIN = $(window).data('MAIN');
+		
+		data.langs.forEach(function(item, i, arr) {
+			arrLangs.push(item.data);
+		});
 
 		MAIN.currentPage = data.defaultPage;
-		MAIN.currentLang = data.defaultLanguage;
+		MAIN.currentLang = $.cookie('language') || data.defaultLanguage;
+
+		defaultLanguage = data.defaultLanguage;
 
 		$(window).trigger( 'main:ready', data );
 
 		setLinkMenu();
+
 
 		router.updatePageLinks();
 	});
@@ -88,7 +98,7 @@ $(function(){
 		SetTitle();
 
 
-		var MAIN = $(window).data('MAIN');
+		// var MAIN = $(window).data('MAIN');
 
 		router
 			.on({
@@ -101,21 +111,23 @@ $(function(){
 					MAIN.currentPage = new_page;
 					MAIN.currentLang = lang;
 
-					var arrLangs = [];
-					
-					data.langs.forEach(function(item, i, arr) {
-						arrLangs.push(item.data);
-					});
+
 					
 
 					if( arrLangs.indexOf( lang ) != -1 ){
+						$.cookie('language', lang)
 
-						$(window).trigger( 'language:changed', lang  );
-						$(window).trigger( 'main:langChanged', lang  )
+						$(window)
+							//cмена языка контента
+							.trigger( 'language:changed', lang  )
+
+							//cмена в языковой менюшке
+							.trigger( 'main:langChanged', lang  )
+						;
+
 					} else {
-
-						router.navigate('404');
-						$(window).trigger( 'main:pageChanged', '404' );
+						$.cookie('language', defaultLanguage)
+						MAIN.currentLang = defaultLanguage;
 					}
 					
 					if( data.pages[new_page] ){
@@ -133,6 +145,8 @@ $(function(){
 					
 					if( data.pages[new_page] ){
 						router.navigate( MAIN.currentLang+'/'+params.id);
+
+						console.log('cath id ');
 
 					} else {
 						router.navigate('404');
@@ -156,9 +170,13 @@ $(function(){
 
 			MAIN.currentLang = lang;
 
-			console.log('curlang', MAIN.currentLang);
+			console.log( 'кука', $.cookie('language') );
+			console.log( 'текущий язык', MAIN.currentLang );
 
 			setLinkMenu();
+
+			$.cookie('language', lang , { expires: 7, path: '/' });
+
 
 
 
@@ -169,7 +187,7 @@ $(function(){
 			SetTitle( MAIN.currentPage, MAIN.currentLang);
 
 
-			router.navigate('/' +MAIN.currentLang+'/'+MAIN.currentPage+'');
+			router.navigate( MAIN.getUrl() );
 
 
 			$("[data-trnslt]").each(function(i,e){
@@ -189,9 +207,10 @@ $(function(){
 		$(window).on( 'main:pageChanged', function(event, page){
 
 			MAIN.currentPage  = page;
-
-			console.log('curpage', MAIN.currentPage);
-
+			console.log( 'кука', $.cookie('language') );
+			console.log( 'текущий язык', MAIN.currentLang );
+// 
+// 
 			SetTitle( MAIN.currentPage, MAIN.currentLang);
 		});
 
